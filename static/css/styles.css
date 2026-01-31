@@ -1,0 +1,191 @@
+:root{
+  --bg:#070a12;
+  --card: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.14);
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.72);
+  --shadow: 0 18px 60px rgba(0,0,0,0.45);
+  --radius: 18px;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue";
+  color: var(--text);
+  background: var(--bg);
+  overflow-x:hidden;
+}
+
+#bg{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+}
+
+.shell{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 32px 16px;
+}
+
+.card{
+  width:min(860px, 100%);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  padding: 28px;
+}
+
+.hero h1{ margin:0 0 10px; font-size: 42px; letter-spacing: -0.5px; }
+.sub{ margin:0 0 18px; color: var(--muted); line-height:1.55; }
+
+.hint{ margin-top: 14px; color: var(--muted); font-size: 14px; }
+code{ color: rgba(200,230,255,0.95); }
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom: 16px;
+}
+.link{
+  color: rgba(200,230,255,0.92);
+  text-decoration:none;
+  font-weight: 600;
+}
+.link:hover{ text-decoration: underline; }
+
+.progress{ width: 280px; max-width: 55vw; text-align:right; }
+.progress span{ color: var(--muted); font-size: 13px; }
+.bar{
+  margin-top: 6px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.12);
+  overflow:hidden;
+}
+.fill{
+  height:100%;
+  width:0%;
+  background: rgba(120,180,255,0.85);
+  border-radius: 999px;
+}
+
+.quiz h2{
+  margin: 10px 0 16px;
+  font-size: 26px;
+  letter-spacing: -0.2px;
+}
+
+.choices{
+  display:grid;
+  gap: 12px;
+  margin: 16px 0 18px;
+}
+
+.choice{
+  text-align:left;
+  padding: 14px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  cursor:pointer;
+  transition: transform .08s ease, background .18s ease, border-color .18s ease;
+}
+.choice:hover{
+  transform: translateY(-1px);
+  border-color: rgba(120,180,255,0.5);
+}
+.choice.selected{
+  background: rgba(120,180,255,0.16);
+  border-color: rgba(120,180,255,0.7);
+}
+
+.nav{
+  display:flex;
+  gap: 10px;
+  justify-content:flex-end;
+  margin-top: 6px;
+}
+
+.actions{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.btn{
+  appearance:none;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  transition: transform .08s ease, background .18s ease, border-color .18s ease;
+}
+.btn:hover{
+  transform: translateY(-1px);
+  border-color: rgba(120,180,255,0.55);
+}
+.btn:disabled{
+  opacity:0.45;
+  cursor:not-allowed;
+  transform:none;
+}
+.btn.primary{
+  background: rgba(120,180,255,0.22);
+  border-color: rgba(120,180,255,0.6);
+}
+.btn.ghost{
+  background: rgba(255,255,255,0.04);
+}
+
+.result h1{ margin: 6px 0 6px; font-size: 38px; }
+.tagline{ margin: 0 0 10px; color: rgba(200,230,255,0.92); font-weight: 700; }
+.desc{ margin: 0 0 18px; color: var(--muted); line-height: 1.6; }
+
+.traits, .scores{ display:grid; gap: 12px; margin-bottom: 18px; }
+.trait .row, .scoreItem .row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.label{ color: rgba(255,255,255,0.86); font-weight: 700; }
+.value{ color: var(--muted); font-weight: 700; }
+
+@media (max-width: 520px){
+  .card{ padding: 18px; }
+  .hero h1{ font-size: 34px; }
+  .progress{ display:none; }
+}
+
+
+.sound{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.sound input[type="range"]{
+  width: 140px;
+}
+
+.th-text {
+    font-family: 'Noto Sans Thai', sans-serif;
+}

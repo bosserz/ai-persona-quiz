@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Persona Quiz</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <canvas id="bg"></canvas>
+
+  <audio id="bgm" preload="auto" loop>
+    <source src="{{ url_for('static', filename='audio/ambient-spring-forest-323801.mp3') }}" type="audio/mpeg">
+  </audio>
+
+  <div class="sound">
+    <button class="btn ghost" id="soundToggle" type="button">Sound: Off</button>
+    <input id="soundVolume" type="range" min="0" max="1" step="0.01" value="0.25" aria-label="Volume">
+  </div>
+
+
+  <main class="shell">
+    <section class="card hero">
+      <h1>AI Persona Quiz</h1>
+      <p class="sub">
+        Answer a few questions and discover your persona.
+      </p>
+      <div class="actions">
+        <!-- <a class="btn primary" href="{{ url_for('quiz') }}">Start Quiz</a> -->
+        <a class="btn primary" id="startQuizBtn"  href="{{ url_for('start') }}">Start Quiz</a>
+        <!-- <button class="btn ghost" id="toggleFx" type="button">Toggle Animation</button> -->
+      </div>
+      <!-- <p class="hint">Tip: You can extend personas and questions in <code>personas.json</code>.</p> -->
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/bg.js') }}"></script>
+  <script>
+    document.getElementById("startQuizBtn")?.addEventListener("click", () => {
+        localStorage.setItem("bgm_muted", "false"); // allow sound when starting
+    });
+  </script>
+  <script src="{{ url_for('static', filename='js/audio.js') }}"></script>
+
+  <script>
+    document.getElementById('toggleFx').addEventListener('click', () => {
+      window.__BG_TOGGLE__ && window.__BG_TOGGLE__();
+    });
+  </script>
+</body>
+</html>

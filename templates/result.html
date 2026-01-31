@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Result | AI Persona Quiz</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <canvas id="bg"></canvas>
+
+  <main class="shell">
+    <section class="card result">
+      <div class="topbar">
+        <a class="link" href="{{ url_for('quiz') }}">← Retake</a>
+        <a class="link" href="{{ url_for('index') }}">Home</a>
+      </div>
+
+      <h1>{{ winner.title }}</h1>
+      <p class="tagline">{{ winner.tagline }}</p>
+      <p class="desc">{{ winner.description }}</p>
+
+      <h3>Traits</h3>
+      <div class="traits">
+        {% for k,v in winner.traits.items() %}
+          <div class="trait">
+            <div class="row">
+              <span class="label">{{ k|capitalize }}</span>
+              <span class="value">{{ v }}%</span>
+            </div>
+            <div class="bar"><div class="fill" style="width: {{ v }}%"></div></div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- <h3>Score Breakdown</h3>
+      <div class="scores">
+        {% for key, meta in personas.items() %}
+          <div class="scoreItem">
+            <div class="row">
+              <span class="label">{{ meta.title }}</span>
+              <span class="value">{{ scores[key] }}</span>
+            </div>
+            <div class="bar"><div class="fill" style="width: {{ score_pct[key] }}%"></div></div>
+          </div>
+        {% endfor %}
+      </div> -->
+
+      <div class="actions">
+        <!-- <a class="btn primary" href="{{ url_for('quiz') }}">Retake</a> -->
+        <a class="btn ghost" href="{{ url_for('index') }}">Done</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/bg.js') }}"></script>
+</body>
+</html>

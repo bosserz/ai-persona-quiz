@@ -1,0 +1,80 @@
+{
+  "personas": {
+    "builder": {
+      "title": "The Builder",
+      "tagline": "You ship fast and iterate.",
+      "description": "You learn by doing and prefer prototypes over theory. Your superpower is momentum.",
+      "traits": { "speed": 85, "structure": 55, "curiosity": 70, "empathy": 50 }
+    },
+    "analyst": {
+      "title": "The Analyst",
+      "tagline": "You optimize for correctness.",
+      "description": "You seek evidence, clarity, and clean reasoning. Your superpower is precision.",
+      "traits": { "speed": 45, "structure": 85, "curiosity": 65, "empathy": 55 }
+    },
+    "visionary": {
+      "title": "The Visionary",
+      "tagline": "You think in big systems.",
+      "description": "You connect ideas and imagine futures. Your superpower is direction and synthesis.",
+      "traits": { "speed": 60, "structure": 60, "curiosity": 90, "empathy": 60 }
+    },
+    "mentor": {
+      "title": "The Mentor",
+      "tagline": "You uplift others.",
+      "description": "You prioritize people, clarity, and support. Your superpower is trust and coaching.",
+      "traits": { "speed": 55, "structure": 65, "curiosity": 60, "empathy": 90 }
+    }
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "When you start a new project, you usually…",
+      "options": [
+        { "text": "Build a quick prototype to learn fast", "weights": { "builder": 3, "visionary": 1 } },
+        { "text": "Plan carefully and define success criteria", "weights": { "analyst": 3, "mentor": 1 } },
+        { "text": "Sketch the big picture and long-term impact", "weights": { "visionary": 3, "analyst": 1 } },
+        { "text": "Align with people and define roles early", "weights": { "mentor": 3, "analyst": 1 } }
+      ]
+    },
+    {
+      "id": "q2",
+      "prompt": "Your ideal feedback is…",
+      "options": [
+        { "text": "Direct and actionable: what to change now", "weights": { "builder": 3 } },
+        { "text": "Data-driven with evidence and alternatives", "weights": { "analyst": 3 } },
+        { "text": "Conceptual: does it match the vision?", "weights": { "visionary": 3 } },
+        { "text": "Supportive and growth-focused", "weights": { "mentor": 3 } }
+      ]
+    },
+    {
+      "id": "q3",
+      "prompt": "In a tough decision, you rely most on…",
+      "options": [
+        { "text": "Speed: test and adjust", "weights": { "builder": 3, "visionary": 1 } },
+        { "text": "Logic: compare trade-offs", "weights": { "analyst": 3 } },
+        { "text": "Intuition: see the pattern", "weights": { "visionary": 3 } },
+        { "text": "Values: what helps people most", "weights": { "mentor": 3 } }
+      ]
+    },
+    {
+      "id": "q4",
+      "prompt": "When collaborating, you naturally become…",
+      "options": [
+        { "text": "The doer who unblocks progress", "weights": { "builder": 3 } },
+        { "text": "The reviewer who improves quality", "weights": { "analyst": 3 } },
+        { "text": "The strategist who aligns direction", "weights": { "visionary": 3 } },
+        { "text": "The facilitator who builds harmony", "weights": { "mentor": 3 } }
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "Your biggest strength is…",
+      "options": [
+        { "text": "Execution", "weights": { "builder": 3 } },
+        { "text": "Rigor", "weights": { "analyst": 3 } },
+        { "text": "Imagination", "weights": { "visionary": 3 } },
+        { "text": "Empathy", "weights": { "mentor": 3 } }
+      ]
+    }
+  ]
+}

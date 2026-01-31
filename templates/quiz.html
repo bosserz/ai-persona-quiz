@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quiz | AI Persona Quiz</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <canvas id="bg"></canvas>
+  <audio id="bgm" preload="auto" loop>
+    <source src="{{ url_for('static', filename='audio/ambient-spring-forest-323801.mp3') }}" type="audio/mpeg">
+  </audio>
+
+  <div class="sound">
+    <button class="btn ghost" id="soundToggle" type="button">Sound: Off</button>
+    <input id="soundVolume" type="range" min="0" max="1" step="0.01" value="0.25" aria-label="Volume">
+  </div>
+
+
+  <main class="shell">
+    <section class="card quiz">
+      <div class="topbar">
+        <a class="link" href="{{ url_for('index') }}">← Home</a>
+        <div class="progress">
+          <span id="progressText">1 / {{ questions|length }}</span>
+          <div class="bar"><div id="barFill" class="fill"></div></div>
+        </div>
+      </div>
+
+      <h2 id="prompt"></h2>
+      <div id="choices" class="choices"></div>
+
+      <div class="nav">
+        <button class="btn ghost" id="prevBtn" type="button">Previous</button>
+        <button class="btn primary" id="nextBtn" type="button">Next</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    window.__QUESTIONS__ = {{ questions|tojson }};
+    window.__SUBMIT_URL__ = "{{ url_for('submit') }}";
+    window.__RESULT_URL__ = "{{ url_for('result') }}";
+  </script>
+  <script src="{{ url_for('static', filename='js/bg.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/audio.js') }}"></script>
+
+</body>
+</html>

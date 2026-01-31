@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Verify Email | AI Persona Quiz</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <canvas id="bg"></canvas>
+
+  <main class="shell">
+    <section class="card">
+      <h1>Enter your work email</h1>
+      <p class="sub th-text">กรุณา Login ด้วย Email บริษัท (@central.co.th หรือ @tops.co.th)</p>
+
+      {% if error %}
+        <p style="color: rgba(255,120,120,0.95); font-weight: 700;">{{ error }}</p>
+      {% endif %}
+
+      <form method="POST" action="{{ url_for('verify_email') }}" class="choices" style="margin-top: 10px;">
+        <input
+          class="choice"
+          style="cursor:text;"
+          type="email"
+          name="email"
+          required
+          placeholder="name@company.com"
+          autocomplete="email"
+        />
+        <button class="btn primary" type="submit">Continue</button>
+      </form>
+
+      <p class="hint">If you already took the quiz, you’ll see your previous result is locked.</p>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/bg.js') }}"></script>
+</body>
+</html>
