@@ -10,7 +10,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-secret-change-me")
 
-APPS_SCRIPT_URL = os.environ.get("APPS_SCRIPT_URL", "https://script.google.com/macros/s/AKfycbzkXV-Xap0LknOlxvNzaXN8GCZoRiY_B9dfK531ZNjg1p0Foc_DEzIxCW0nFxK-RfCi/exec")  # Web app URL
+APPS_SCRIPT_URL = os.environ.get("APPS_SCRIPT_URL", "https://script.google.com/macros/s/AKfycbyduzh-CH2VlqZ8rxmnWvn8wwJegsklEw4T6R_KZnApZKoZm5VpczktitvIUoEFgAnx/exec")  # Web app URL
 APPS_SCRIPT_TOKEN = os.environ.get("APPS_SCRIPT_TOKEN", "CHANGE_ME_TO_A_LONG_RANDOM_STRING")  # same as API_TOKEN in Apps Script
 
 
@@ -92,19 +92,35 @@ def verify_email():
     except Exception as e:
         return render_template("email.html", error=f"Verification service error: {e}")
 
-    if not res.get("ok"):
-        err = res.get("error", "verification_failed")
-        # Friendly messages
-        msg_map = {
-            "invalid_email": "That email format looks invalid.",
-            "not_allowed": "Your email is not in the allowed list.",
-            "already_submitted": "You have already submitted this quiz. The first result is locked."
-        }
-        return render_template("email.html", error=msg_map.get(err, f"Verification failed: {err}"))
+    if res.get("ok") is True:
+        session["email"] = email
+        # clear any old result
+        session.pop("answers", None)
+        session.pop("winner", None)
+        session.pop("readonly", None)
+        return redirect(url_for("quiz"))
 
-    # Verified and not submitted
-    session["email"] = email
-    return redirect(url_for("quiz"))
+    # Not ok
+    err = res.get("error")
+    if err == "already_submitted" and res.get("result"):
+        session["email"] = email
+        session["readonly"] = True
+
+        # Stored results from sheet
+        session["winner"] = res["result"].get("persona")
+        # answers are keyed by q1..qN in Apps Script helper above
+        # convert to your internal qid format if needed
+        session["answers"] = res["result"].get("answers", {})
+
+        return redirect(url_for("result"))
+
+    msg_map = {
+        "invalid_email": "That email format looks invalid.",
+        "not_allowed": "Your email is not in the allowed list.",
+        "already_submitted": "You have already submitted. (Result not found in sheet.)"
+    }
+    return render_template("email.html", error=msg_map.get(err, f"Verification failed: {err}"))
+
 
 
 @app.route("/quiz")
@@ -167,20 +183,52 @@ def result():
     if not require_verified_email():
         return redirect(url_for("start"))
 
-    answers = session.get("answers")
     winner_key = session.get("winner")
-    if not answers or not winner_key:
+    answers = session.get("answers", {})
+    readonly = bool(session.get("readonly", False))
+
+    if not winner_key:
+        # If user somehow navigated here without a stored result
         return redirect(url_for("quiz"))
 
-    persona = QUIZ.personas[winner_key]
+    winner = QUIZ.personas.get(winner_key)
+    if not winner:
+        return render_template("result.html", winner_key="unknown", winner={
+            "title": "Unknown",
+            "tagline": "",
+            "description": "Could not find persona configuration for this result.",
+            "traits": {}
+        }, scores={}, score_pct={}, personas=QUIZ.personas, readonly=readonly)
+
+    # Optional: recompute scores if you want to show breakdown
+    # Only works if answers are indices and match your quiz question IDs.
+    scores = {k: 0 for k in QUIZ.personas.keys()}
+    try:
+        # Convert answers values to int indices when possible
+        cleaned = {}
+        for k, v in answers.items():
+            try:
+                cleaned[k] = int(v)
+            except Exception:
+                pass
+        winner2, scores = compute_result(cleaned)
+        # winner2 should match winner_key if consistent
+    except Exception:
+        pass
+
+    max_score = max(scores.values()) if scores else 1
+    score_pct = {k: int((v / max_score) * 100) if max_score > 0 else 0 for k, v in scores.items()}
+
     return render_template(
         "result.html",
         winner_key=winner_key,
-        winner=persona,
-        scores={},      # optional: keep your existing breakdown logic if you want
-        score_pct={},   # optional
-        personas=QUIZ.personas
+        winner=winner,
+        scores=scores,
+        score_pct=score_pct,
+        personas=QUIZ.personas,
+        readonly=readonly
     )
+
 
 
 import os

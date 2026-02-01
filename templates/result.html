@@ -11,10 +11,17 @@
 
   <main class="shell">
     <section class="card result">
-      <div class="topbar">
+      <!-- <div class="topbar">
         <a class="link" href="{{ url_for('quiz') }}">← Retake</a>
         <a class="link" href="{{ url_for('index') }}">Home</a>
-      </div>
+      </div> -->
+
+      {% if readonly %}
+        <div class="notice">
+          This email already completed the quiz. Showing the saved result (first attempt).
+        </div>
+      {% endif %}
+
 
       <h1>{{ winner.title }}</h1>
       <p class="tagline">{{ winner.tagline }}</p>

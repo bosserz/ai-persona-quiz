@@ -189,3 +189,13 @@ code{ color: rgba(200,230,255,0.95); }
 .th-text {
     font-family: 'Noto Sans Thai', sans-serif;
 }
+
+.notice{
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+  margin-bottom: 12px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 700;
+}
